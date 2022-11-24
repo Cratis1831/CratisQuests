@@ -7,6 +7,7 @@ local doNotShowQuestType = {
 	[261] = "Island Weekly Quest",
 	[270] = "Threat Emissary Quest",
 	[81] = "Threat Emissary Quest",
+	[109] = "World Quest",
 	--[0] = "Other"
 }
 
