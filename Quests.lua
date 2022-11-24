@@ -20,6 +20,7 @@ CratisDFQuests.validDFQuests = {
 	["djaradin djustice"]           = true,
 	["dragonhunter igordan"]        = true,
 	["ancient hornswog"]            = true,
+	["to skytop observatory"]       = true,
 
 	-- Ohn'ahran Plains Side Quests
 	["thieving gorlocs"]                = true,
