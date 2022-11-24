@@ -4,7 +4,7 @@ local f = CreateFrame("Frame")
 
 local defaults = {
     playSound = true,
-    autoDrop = true
+    autoDrop = false,
 }
 
 function f:OnEvent(event, addOnName)
@@ -12,7 +12,9 @@ function f:OnEvent(event, addOnName)
         print("|cfffcba03Cratis_DFQuestsloaded - Options: /cdf")
 
         CratisDFQuestsDB = CratisDFQuestsDB or CopyTable(defaults)
+        QuestDB = QuestDB or CopyTable(CratisDFQuests.validDFQuests)
         self.db = CratisDFQuestsDB
+        self.questDB = QuestDB
         self:InitializeOptions()
     end
 end
@@ -59,13 +61,40 @@ function f:InitializeOptions()
         cb:SetChecked(self.db.autoDrop)
     end
 
-    --local btn = CreateFrame("Button", nil, self.panel, "UIPanelButtonTemplate")
-    --btn:SetPoint("TOPLEFT", cb, 0, -40)
-    --btn:SetText("Click me")
-    --btn:SetWidth(100)
-    --btn:SetScript("OnClick", function()
-    --    print("You clicked me!")
-    --end)
+
+    local t = self.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+    t:SetText("List of Side Quests & Bonus Objectives:")
+    t:SetPoint("TOPLEFT", self.panel, 20, -250)
+    do
+        local scrollFrame = CreateFrame("ScrollFrame", nil, self.panel, "UIPanelScrollFrameTemplate")
+        scrollFrame:SetPoint("TOPLEFT", 3, -280)
+        scrollFrame:SetPoint("BOTTOMRIGHT", -27, 4)
+
+        local scrollChild = CreateFrame("Frame")
+        scrollFrame:SetScrollChild(scrollChild)
+        scrollChild:SetWidth(500)
+        scrollChild:SetHeight(1)
+
+
+        local coord = -20
+        local bd = CreateFrame("Frame", nil, scrollChild)
+        for k, v in pairs(self.questDB) do
+            do
+                local cb = CreateFrame("CheckButton", nil, scrollChild, "InterfaceOptionsCheckButtonTemplate")
+                cb:SetPoint("TOPLEFT", 20, coord)
+
+
+                cb.Text:SetText(k)
+                -- there already is an existing OnClick script that plays a sound, hook it
+                cb:HookScript("OnClick", function(_, btn, down)
+                    self.questDB[k] = cb:GetChecked()
+                end)
+                cb:SetChecked(self.questDB[k])
+                coord = coord + -20
+            end
+        end
+
+    end
 
     InterfaceOptions_AddCategory(self.panel)
 end

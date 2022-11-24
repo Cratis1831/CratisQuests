@@ -7,6 +7,7 @@ local doNotShowQuestType = {
 	[261] = "Island Weekly Quest",
 	[270] = "Threat Emissary Quest",
 	[81] = "Threat Emissary Quest",
+	[0] = "Other"
 }
 
 local doNotTropQuestTypes = {
@@ -38,6 +39,7 @@ UIConfig:RegisterEvent("QUEST_ACCEPTED");
 local function eventHandler(self, event, arg1)
 	if event == "QUEST_ACCEPTED" then
 		self.db = CratisDFQuestsDB or CopyTable(defaults)
+		self.questDB = QuestDB or CopyTable(CratisDFQuests.validDFQuests)
 		local questID = arg1
 		local questType = C_QuestLog.GetQuestType(questID)
 		local questTitle = C_QuestLog.GetTitleForQuestID(questID)
