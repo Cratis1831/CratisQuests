@@ -1,6 +1,6 @@
 local addonName, CratisDFQuests = ...
 
-print("|cfffcba03Cratis_DFQuests v0.3 loaded")
+print("|cfffcba03Cratis_DFQuests loaded")
 
 local doNotShowQuestType = {
 	[128] = "Emissary Quest",
