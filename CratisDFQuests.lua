@@ -8,6 +8,7 @@ local doNotShowQuestType = {
 	[270] = "Threat Emissary Quest",
 	[81] = "Threat Emissary Quest",
 	[109] = "World Quest",
+	[265] = "Hidden Quest",
 	--[0] = "Other"
 }
 
