@@ -1,0 +1,7 @@
+package-as: CratisDFQuests
+
+ignore:
+    - .github
+    - .gitignore
+    - .previews
+    - README.md
