@@ -2,7 +2,7 @@
 ## Title: CratisDFQuests
 ## Notes: Addon that lets you drop sides quests that aren't needed when leveling in Dragonflight
 ## Author: Cratis
-## Version: v0.3
+## Version: @project-version@
 ## SavedVariables: QuestDB, CratisDFQuestsDB
 ## X-License: GPL v3
 ## X-Curse-Project-ID: 711263
