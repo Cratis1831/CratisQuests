@@ -39,7 +39,7 @@ btnKeep:Hide()
 
 UIConfig:RegisterEvent("QUEST_ACCEPTED");
 local function eventHandler(self, event, arg1)
-	if event == "QUEST_ACCEPTED" then
+	if event == "QUEST_ACCEPTED" and (UnitLevel("player") >= 60 and UnitLevel("player") < 70) then
 		self.db = CratisDFQuestsDB or CopyTable(defaults)
 		self.questDB = QuestDB or CopyTable(CratisDFQuests.validDFQuests)
 		local questID = arg1
