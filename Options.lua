@@ -29,7 +29,7 @@ function f:InitializeOptions()
 
 
     local t = self.panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-    t:SetText("Cratis DF Quests")
+    t:SetText("Cratis Dragonflight Quests")
     t:SetPoint("TOPLEFT", self.panel, 20, -15)
 
     local t = self.panel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
