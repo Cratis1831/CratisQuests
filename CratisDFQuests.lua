@@ -58,7 +58,7 @@ local function eventHandler(self, event, arg1)
 			end
 			if (campaignInfo ~= nil) then
 				if (campaignInfo["name"] ~= '') then
-					print("Campaign Name: " .. campaignInfo["name"])
+					--print("Campaign Name: " .. campaignInfo["name"])
 					keep = true
 				end
 			end
@@ -71,7 +71,7 @@ local function eventHandler(self, event, arg1)
 				end
 				if (self.db.autoDrop == false) then
 
-					self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal side quest")
+					self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal quest")
 					btnDrop:Show()
 					btnKeep:Show()
 
@@ -100,7 +100,7 @@ local function eventHandler(self, event, arg1)
 				if (self.db.autoDrop == true) then
 					btnDrop:Hide()
 					btnKeep:Hide()
-					self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal side quest, dropping it!")
+					self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal quest, dropping it!")
 					C_Timer.After(2,
 						function()
 							C_QuestLog.SetSelectedQuest(questID)

@@ -54,6 +54,10 @@ CratisDFQuests.validDFQuests = {
 	["a craft in need "]                = true,
 	["targeted ads"]                    = true,
 	["shikaar giver"]                   = true,
+	["skaara"]                          = true,
+	["prozela galeshot"]                = true,
+	["the storm scar"]                  = true,
+	["ty'foon the ascended"]            = true,
 
 	-- The Azure Span Side Quests
 	["wanted: frigellus"]                = true,
