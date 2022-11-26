@@ -38,6 +38,17 @@ btnDrop:Hide()
 btnKeep:Hide()
 
 UIConfig:RegisterEvent("QUEST_ACCEPTED");
+
+local function shareQuest(questId, questTitle)
+	local isPushable = C_QuestLog.IsPushableQuest(questId)
+	if (isPushable) then
+		C_QuestLog.SetSelectedQuest(questId)
+		QuestLogPushQuest();
+		DEFAULT_CHAT_FRAME:AddMessage(string.format("Attempting to share %s with your group...", questTitle));
+		return;
+	end
+end
+
 local function eventHandler(self, event, arg1)
 	if event == "QUEST_ACCEPTED" and (UnitLevel("player") >= 60 and UnitLevel("player") < 70) then
 		self.db = CratisDFQuestsDB or CopyTable(defaults)
@@ -75,14 +86,25 @@ local function eventHandler(self, event, arg1)
 					btnDrop:Show()
 					btnKeep:Show()
 
+
 					do
 						btnKeep:SetPoint("TOPLEFT", UIConfig, -60, -40)
-						btnKeep:SetText("Keep Quest")
 						btnKeep:SetSize(100, 50)
+						if (IsInGroup()) then
+							btnKeep:SetText("Keep & Share Quest")
+							btnKeep:SetSize(125, 50)
+						else
+							btnKeep:SetText("Keep Quest")
+						end
+
 						btnKeep:SetScript("OnClick", function()
+							if (IsInGroup()) then
+								shareQuest(questID, questTitle)
+							end
 							self:Hide()
 						end)
 					end
+
 
 					do
 						btnDrop:SetPoint("TOPRIGHT", UIConfig, 60, -40)
@@ -109,6 +131,10 @@ local function eventHandler(self, event, arg1)
 							self:Hide()
 						end
 					)
+				end
+			else
+				if (self.db.shareQuests == true and IsInGroup()) then
+					shareQuest(questID, questTitle)
 				end
 			end
 		end

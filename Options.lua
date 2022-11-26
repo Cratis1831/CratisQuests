@@ -5,6 +5,7 @@ local f = CreateFrame("Frame")
 local defaults = {
     playSound = true,
     autoDrop = false,
+    shareQuests = true,
 }
 
 function f:OnEvent(event, addOnName)
@@ -59,6 +60,17 @@ function f:InitializeOptions()
             self.db.autoDrop = cb:GetChecked()
         end)
         cb:SetChecked(self.db.autoDrop)
+    end
+
+    do
+        local cb = CreateFrame("CheckButton", nil, self.panel, "InterfaceOptionsCheckButtonTemplate")
+        cb:SetPoint("TOPLEFT", 20, -140)
+        cb.Text:SetText("Auto Share Quest with Group")
+        -- there already is an existing OnClick script that plays a sound, hook it
+        cb:HookScript("OnClick", function(_, btn, down)
+            self.db.shareQuests = cb:GetChecked()
+        end)
+        cb:SetChecked(self.db.shareQuests)
     end
 
 
