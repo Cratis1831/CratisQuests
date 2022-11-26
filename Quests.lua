@@ -111,4 +111,7 @@ CratisDFQuests.validDFQuests = {
 	["bleeding hearts"]   = true,
 	["private shikzar"]   = true,
 	["henlare"]           = true,
+	["lookout mordren"]   = true,
+	["acrosoth"]          = true,
+
 }
