@@ -52,11 +52,12 @@ end
 
 local function eventHandler(self, event, arg1)
 
-	local mapID = C_Map.GetBestMapForUnit("player")
-	local mapName = C_Map.GetMapInfo(mapID).name
 
-	if (mapName == CratisDFQuests.DragonflightMapID[mapID]) then
-		if event == "QUEST_ACCEPTED" and (UnitLevel("player") >= 60 and UnitLevel("player") < 70) then
+	if event == "QUEST_ACCEPTED" and (UnitLevel("player") >= 60 and UnitLevel("player") < 70) then
+		local mapID = C_Map.GetBestMapForUnit("player")
+		local mapName = C_Map.GetMapInfo(mapID).name
+
+		if (mapName == CratisDFQuests.DragonflightMapID[mapID]) then
 			self.db = CratisDFQuestsDB or CopyTable(defaults)
 			self.questDB = QuestDB or CopyTable(CratisDFQuests.validDFQuests)
 			local questID = arg1
@@ -144,10 +145,11 @@ local function eventHandler(self, event, arg1)
 					end
 				end
 			end
+			--else
+			--	print(mapName .. "(" .. mapID .. ")" .. " is not a Dragonflight Zone ID, allowing quest...")
 		end
-	else
-		print(mapName .. "(" .. mapID .. ")" .. " is not a Dragonflight Zone ID, allowing quest...")
 	end
+
 end
 
 UIConfig:SetScript("OnEvent", eventHandler);
