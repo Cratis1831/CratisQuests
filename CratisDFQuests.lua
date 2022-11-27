@@ -16,6 +16,7 @@ local doNotTropQuestTypes = {
 	[267] = "Professions",
 }
 
+
 local questDB = {}
 
 local UIConfig = CreateFrame("Frame", nil, UIParent);
@@ -50,94 +51,102 @@ local function shareQuest(questId, questTitle)
 end
 
 local function eventHandler(self, event, arg1)
-	if event == "QUEST_ACCEPTED" and (UnitLevel("player") >= 60 and UnitLevel("player") < 70) then
-		self.db = CratisDFQuestsDB or CopyTable(defaults)
-		self.questDB = QuestDB or CopyTable(CratisDFQuests.validDFQuests)
-		local questID = arg1
-		local questType = C_QuestLog.GetQuestType(questID)
-		local questTitle = C_QuestLog.GetTitleForQuestID(questID)
-		local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
-		local info = C_QuestLog.GetInfo(questLogIndex)
 
-		local campaignID = C_CampaignInfo.GetCampaignID(questID)
-		local validQuestList = CratisDFQuests.validDFQuests
-		local keep = false
-		if (doNotShowQuestType[questType] == nil) then
-			local campaignInfo = C_CampaignInfo.GetCampaignInfo(campaignID)
-			if (validQuestList[strlower(questTitle)] ~= nil or doNotTropQuestTypes[questType] ~= nil) then
-				keep = true
-			end
-			if (campaignInfo ~= nil) then
-				if (campaignInfo["name"] ~= '') then
-					--print("Campaign Name: " .. campaignInfo["name"])
+	local mapID = C_Map.GetBestMapForUnit("player")
+	local mapName = C_Map.GetMapInfo(mapID).name
+
+	if (mapName == CratisDFQuests.DragonflightMapID[mapID]) then
+		if event == "QUEST_ACCEPTED" and (UnitLevel("player") >= 60 and UnitLevel("player") < 70) then
+			self.db = CratisDFQuestsDB or CopyTable(defaults)
+			self.questDB = QuestDB or CopyTable(CratisDFQuests.validDFQuests)
+			local questID = arg1
+			local questType = C_QuestLog.GetQuestType(questID)
+			local questTitle = C_QuestLog.GetTitleForQuestID(questID)
+			local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
+			local info = C_QuestLog.GetInfo(questLogIndex)
+
+			local campaignID = C_CampaignInfo.GetCampaignID(questID)
+			local validQuestList = CratisDFQuests.validDFQuests
+			local keep = false
+			if (doNotShowQuestType[questType] == nil) then
+				local campaignInfo = C_CampaignInfo.GetCampaignInfo(campaignID)
+				if (validQuestList[strlower(questTitle)] ~= nil or doNotTropQuestTypes[questType] ~= nil) then
 					keep = true
 				end
-			end
-			if (keep == false) then
-				--self.Text:SetText("EVENT: " .. event .. " quest: " .. title .. " id: " .. arg1 .. " questType: " .. questType);
-				self:Show()
-
-				if (self.db.playSound == true) then
-					PlaySoundFile(567459, "Master")
+				if (campaignInfo ~= nil) then
+					if (campaignInfo["name"] ~= '') then
+						--print("Campaign Name: " .. campaignInfo["name"])
+						keep = true
+					end
 				end
-				if (self.db.autoDrop == false) then
+				if (keep == false) then
+					--self.Text:SetText("EVENT: " .. event .. " quest: " .. title .. " id: " .. arg1 .. " questType: " .. questType);
+					self:Show()
 
-					self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal quest")
-					btnDrop:Show()
-					btnKeep:Show()
+					if (self.db.playSound == true) then
+						PlaySoundFile(567459, "Master")
+					end
+					if (self.db.autoDrop == false) then
+
+						self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal quest")
+						btnDrop:Show()
+						btnKeep:Show()
 
 
-					do
-						btnKeep:SetPoint("TOPLEFT", UIConfig, -60, -40)
-						btnKeep:SetSize(100, 50)
-						if (IsInGroup()) then
-							btnKeep:SetText("Keep & Share Quest")
-							btnKeep:SetSize(125, 50)
-						else
-							btnKeep:SetText("Keep Quest")
-						end
-
-						btnKeep:SetScript("OnClick", function()
+						do
+							btnKeep:SetPoint("TOPLEFT", UIConfig, -60, -40)
+							btnKeep:SetSize(100, 50)
 							if (IsInGroup()) then
-								shareQuest(questID, questTitle)
+								btnKeep:SetText("Keep & Share Quest")
+								btnKeep:SetSize(125, 50)
+							else
+								btnKeep:SetText("Keep Quest")
 							end
-							self:Hide()
-						end)
-					end
 
-
-					do
-						btnDrop:SetPoint("TOPRIGHT", UIConfig, 60, -40)
-						btnDrop:SetText("Drop Quest")
-						btnDrop:SetSize(100, 50)
-						btnDrop:SetScript("OnClick", function()
-							C_QuestLog.SetSelectedQuest(questID)
-							C_QuestLog.SetAbandonQuest()
-							C_QuestLog.AbandonQuest()
-							self:Hide()
-						end)
-					end
-
-				end
-				if (self.db.autoDrop == true) then
-					btnDrop:Hide()
-					btnKeep:Hide()
-					self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal quest, dropping it!")
-					C_Timer.After(2,
-						function()
-							C_QuestLog.SetSelectedQuest(questID)
-							C_QuestLog.SetAbandonQuest()
-							C_QuestLog.AbandonQuest()
-							self:Hide()
+							btnKeep:SetScript("OnClick", function()
+								if (IsInGroup()) then
+									shareQuest(questID, questTitle)
+								end
+								self:Hide()
+							end)
 						end
-					)
-				end
-			else
-				if (self.db.shareQuests == true and IsInGroup()) then
-					shareQuest(questID, questTitle)
+
+
+						do
+							btnDrop:SetPoint("TOPRIGHT", UIConfig, 60, -40)
+							btnDrop:SetText("Drop Quest")
+							btnDrop:SetSize(100, 50)
+							btnDrop:SetScript("OnClick", function()
+								C_QuestLog.SetSelectedQuest(questID)
+								C_QuestLog.SetAbandonQuest()
+								C_QuestLog.AbandonQuest()
+								self:Hide()
+							end)
+						end
+
+					end
+					if (self.db.autoDrop == true) then
+						btnDrop:Hide()
+						btnKeep:Hide()
+						self.Text:SetText("|cfffcba03\"" .. questTitle .. "\" is not an optimal quest, dropping it!")
+						C_Timer.After(2,
+							function()
+								C_QuestLog.SetSelectedQuest(questID)
+								C_QuestLog.SetAbandonQuest()
+								C_QuestLog.AbandonQuest()
+								self:Hide()
+							end
+						)
+					end
+				else
+					if (self.db.shareQuests == true and IsInGroup()) then
+						shareQuest(questID, questTitle)
+					end
 				end
 			end
 		end
+	else
+		print(mapName .. "(" .. mapID .. ")" .. " is not a Dragonflight Zone ID, allowing quest...")
 	end
 end
 
