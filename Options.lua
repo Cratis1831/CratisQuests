@@ -72,37 +72,6 @@ function CratisQuests.panel:InitializeOptions()
         end)
         cb:SetChecked(self.db.shareQuests)
     end
-
-    local t = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-    t:SetText("List of Side Quests & Bonus Objectives:")
-    t:SetPoint("TOPLEFT", self, 20, -250)
-
-    do
-        local scrollFrame = CreateFrame("ScrollFrame", nil, self, "UIPanelScrollFrameTemplate")
-        scrollFrame:SetPoint("TOPLEFT", 3, -280)
-        scrollFrame:SetPoint("BOTTOMRIGHT", -27, 4)
-
-        local scrollChild = CreateFrame("Frame")
-        scrollFrame:SetScrollChild(scrollChild)
-        scrollChild:SetWidth(500)
-        scrollChild:SetHeight(1)
-
-        local coord = -20
-        local bd = CreateFrame("Frame", nil, scrollChild)
-        for k, v in pairs(self.questDB) do
-            do
-                local cb = CreateFrame("CheckButton", nil, scrollChild, "InterfaceOptionsCheckButtonTemplate")
-                cb:SetPoint("TOPLEFT", 20, coord)
-
-                cb.Text:SetText(k)
-                cb:HookScript("OnClick", function(_, btn, down)
-                    self.questDB[k] = cb:GetChecked()
-                end)
-                cb:SetChecked(self.questDB[k])
-                coord = coord + -20
-            end
-        end
-    end
 end
 
 -- Define the slash command
