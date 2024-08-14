@@ -71,15 +71,16 @@ local function eventHandler(self, event, arg1)
 				local questTitle = C_QuestLog.GetTitleForQuestID(questID)
 				local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
 				local info = C_QuestLog.GetInfo(questLogIndex)
+				local isBonusObjective = QuestUtils_IsQuestBonusObjective(questID)
 
 				local campaignID = C_CampaignInfo.GetCampaignID(questID)
 				local validQuestList = CratisQuests.validQuests
 				local keep = false
 				if (doNotShowQuestType[questType] == nil) then
 					local campaignInfo = C_CampaignInfo.GetCampaignInfo(campaignID)
-					-- if (validQuestList[strlower(questTitle)] ~= nil or doNotTropQuestTypes[questType] ~= nil) then
 					-- changed to use questID instead of questTitle
-					if (validQuestList[questID] ~= nil or doNotTropQuestTypes[questType] ~= nil) then
+					-- include the bonus objectives as well
+					if (validQuestList[questID] ~= nil or doNotTropQuestTypes[questType] ~= nil or isBonusObjective) then
 						keep = true
 					end
 					if (campaignInfo ~= nil) then
