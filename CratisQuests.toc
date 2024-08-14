@@ -1,0 +1,12 @@
+## Interface: 110000
+## Title: CratisQuests (The War Within)
+## Notes: Addon that lets you drop sides quests that aren't needed when leveling in The War Within
+## Author: Cratis
+## Version: @project-version@
+## SavedVariables: QuestDB, CratisQuestsDB
+## X-License: GPL v3
+## X-Curse-Project-ID: 711263
+
+Quests.lua
+Options.lua
+CratisQuests.lua

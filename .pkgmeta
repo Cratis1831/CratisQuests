@@ -1,4 +1,4 @@
-package-as: CratisDFQuests
+package-as: CratisQuests
 
 ignore:
     - .github
