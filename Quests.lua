@@ -15,6 +15,7 @@ CratisQuests.validQuests = {
 	[78999] = true,
 	[83181]	= true,
 	[79667] = true,
+	[79686] = true, -- Manually added, quick quest 10k exp
 
 	-- The Ringing Deeps
 	[80392] = true,
